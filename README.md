@@ -90,7 +90,7 @@ cnlp_init_corenlp(language = "ar")
 Then, for the sake of speed, we’ll extract just the first surah of the
 Qur’an ([the Fatihah](https://en.wikipedia.org/wiki/Al-Fatiha)) and tag
 it with `cnlp_annotate()`. We’ll use the version of the Qur’an without
-vowels becuase it seems to work better with CoreNLP. `cnlp_annotate()`
+vowels because it seems to work better with CoreNLP. `cnlp_annotate()`
 does the heavy lifting of annotation and returns an object with the
 `annotate` class, which isn’t readily usable. We use `cnlp_get_token()`
 to transform it to a data frame, which makes it easier to analyze with
@@ -174,7 +174,7 @@ in a `removeStopWords()` function. We can extract that list into its own
 mini data frame, though.
 
 The [**stopwords** package](https://github.com/davnn/stopwords) also has
-a much of common Arabic words, accessible through
+a bunch of common Arabic words, accessible through
 `stopwords::stopwords(language = "ar", source = "misc"))`, but it’s not
 as long of a list as `arabicStemR::removeStopWords()`, and it includes
 important Qur’anic words like يوم (day). So we’ll just use the
@@ -211,10 +211,12 @@ plot_top_nouns <- ggplot(top_nouns, aes(x = fct_rev(word), y = n, fill = n > 500
   geom_col() + 
   scale_fill_manual(values = c("#8F562B", "#276B42"), guide = FALSE) +
   scale_y_continuous(labels = scales::comma) +
-  labs(y = "Frequency", x = NULL) +
+  labs(y = "Frequency", x = NULL,
+       title = "Most common nouns in the Qur'an") +
   coord_flip() +
   theme_minimal() +
-  theme(panel.grid.major.y = element_blank())
+  theme(panel.grid.major.y = element_blank(),
+        plot.title = element_text(face = "bold"))
 plot_top_nouns
 ```
 
@@ -251,10 +253,12 @@ plot_top_verbs <- ggplot(top_verbs_themes,
   geom_col() + 
   scale_fill_manual(values = c("#2BCAE0", "#9D2D2A", "#F5D085"),
                     name = NULL) +
-  labs(y = "Frequency", x = NULL) +
+  labs(y = "Frequency", x = NULL,
+       title = "Most common verbs in the Qur'an") +
   coord_flip() +
   theme_minimal() +
   theme(panel.grid.major.y = element_blank(),
+        plot.title = element_text(face = "bold"),
         legend.position = "bottom",
         legend.key.size = unit(0.65, "lines"))
 plot_top_verbs
